@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.ProfileActivity"
+    android:background="#FF3FA6B5">
+
+    <include
+        android:id="@+id/profilePageToolbar"
+        layout="@layout/toolbar2"
+        ></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profilePageToolbar"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:paddingTop="12dip"
+        android:id="@+id/relativeLayout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileUserName"
+            android:hint="Imię"
+            android:background="#FFFFFF"
+            android:padding="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profilePhoneNumber"
+            android:layout_below="@+id/profileEmail"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:hint="Numer telefonu"
+            android:background="#FFFFFF"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileUserSurname"
+            android:padding="10dp"
+            android:hint="Nazwisko"
+            android:background="#FFFFFF"
+            android:layout_below="@+id/profileUserName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileEmail"
+            android:padding="10dp"
+            android:hint="Email(min. 6 znaków)"
+            android:inputType="textEmailAddress"
+            android:layout_below="@+id/profileUserSurname"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="14dp"
+            android:background="#FFFFFF"/>
+
+        <Button
+            android:text="AKTUALIZUJ"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/profilePhoneNumber"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_button_active"
+            android:layout_marginTop="15dp"
+            android:id="@+id/profileButton" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:id="@+id/changePasswordRelativeLayout">
+
+        <TextView
+            android:text="Zmień hasło"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp"
+            android:id="@+id/changePasswordLink" />
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

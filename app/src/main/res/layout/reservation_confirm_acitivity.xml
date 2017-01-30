@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_reservation_confirm_acitivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF3FA6B5"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.ReservationConfirmAcitivity">
+
+    <include
+        android:id="@+id/reservationConfirmToolbar"
+        layout="@layout/toolbar2"
+        ></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reservationConfirmToolbar"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:paddingTop="12dip"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reservationConfirmDoctorName"
+            android:background="@drawable/rounded_border"
+            android:padding="10dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reservationConfirmTreatmentName"
+            android:layout_below="@+id/reservationConfirmDoctorName"
+            android:padding="10dp"
+            android:background="@drawable/rounded_border"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reservationConfirmDate"
+            android:layout_below="@+id/reservationConfirmTreatmentName"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:background="@drawable/rounded_border"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reservationConfirmTime"
+            android:padding="10dp"
+            android:background="@drawable/rounded_border"
+            android:layout_below="@+id/reservationConfirmDate"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"/>
+
+
+        <Button
+            android:text="Umów wizytę"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reservationConfirmTime"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_button_active"
+            android:id="@+id/reservationConfirmButton"
+            android:enabled="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

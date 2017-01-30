@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/advanced_search_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.AdvancedSearchActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/advancedSearchInput"
+        android:drawableLeft="@drawable/search"
+        android:background="@drawable/rounded_border"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterTextLayout"
+        android:layout_below="@+id/advancedSearchInput"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sortText"
+            android:text="Sortuj według:"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filtersLayout"
+        android:layout_below="@+id/filterTextLayout"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opinie"
+            android:id="@+id/opinionsButton"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rounded_button_inactive"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data wizyty"
+            android:id="@+id/dateButton"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginLeft="17dp"
+            android:background="@drawable/rounded_button_inactive"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/distanceButton"
+            android:text="Odległość"
+            android:layout_marginLeft="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="@drawable/rounded_button_inactive"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/startFilterButton"
+        android:layout_below="@+id/filtersLayout"
+        android:background="@drawable/rounded_button_active"
+        android:text="SORTUJ"
+        android:layout_marginTop="5dp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/advancedSearchDoctorsList"
+        android:layout_below="@+id/startFilterButton"
+        android:background="@drawable/rounded_border"
+        android:layout_marginTop="5dp">
+    </ListView>
+
+
+
+</RelativeLayout>

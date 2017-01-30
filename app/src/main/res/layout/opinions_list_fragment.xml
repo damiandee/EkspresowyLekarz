@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_green_dark">
+
+    <Button
+        android:text="Dodaj opinię"
+        android:layout_width="151dp"
+        android:id="@+id/addOpinionButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:id="@+id/opinionHorizontalLine"
+        android:background="#6f6ff5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addOpinionButton" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/opinionsListView"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/rounded_border"
+        android:layout_below="@+id/opinionHorizontalLine"
+        android:layout_alignParentLeft="true" />
+
+    <RatingBar
+        android:id="@+id/doctorOpinionsRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        style="?android:attr/ratingBarStyleSmall"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:isIndicator="true"
+        android:paddingTop="11dip"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/addOpinionButton"
+        android:layout_toEndOf="@+id/addOpinionButton" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/doctorOpinionsRatingBar"
+        android:layout_toRightOf="@+id/doctorOpinionsRatingBar"
+        android:layout_toEndOf="@+id/doctorOpinionsRatingBar"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:id="@+id/doctorOpinionsCounter" />
+
+</RelativeLayout>

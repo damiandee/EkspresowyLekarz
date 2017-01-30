@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <group android:id="@+id/mainMenuGroup">
+        <item
+            android:id="@+id/mainMenu"
+            android:title="Heheszky"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group android:id="@+id/profileGroup">
+        <item
+            android:id="@+id/profile"
+            android:title="Twoje konto"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group android:id="@+id/visitsGroup">
+        <item
+            android:id="@+id/visits"
+            android:title="Twoje wizyty"
+            app:showAsAction="ifRoom" />
+    </group>
+
+    <group android:id="@+id/md_menu_second_group">
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="100"
+            android:title="Wyloguj się"
+            app:showAsAction="ifRoom" />
+    </group>
+</menu>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_opinion_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.AddOpinionActivity">
+
+    <include
+        android:id="@+id/addOpinionToolbar"
+        layout="@layout/toolbar"
+        ></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_below="@+id/addOpinionToolbar"
+        android:background="#c3c3c3"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayout2"
+            android:background="@drawable/rounded_border"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeVisitLinearLayout"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/visitName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:textStyle="bold"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/visitDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/visitName" />
+
+            <TextView
+                android:id="@+id/visitTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/visitDate"
+                android:layout_alignBottom="@+id/visitName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeVisitInfoLinearLayout"
+            android:layout_below="@+id/removeVisitLinearLayout"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/visitDoctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                />
+
+            <TextView
+                android:id="@+id/visitDoctorAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                />
+
+            <TextView
+                android:id="@+id/visitCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                />
+        </LinearLayout>
+        </RelativeLayout>
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/opinionContent"
+            android:layout_below="@+id/relativeLayout2"
+            android:background="@drawable/rounded_border"
+            android:hint="Napisz swoją opinię na temat lekarza i wizyty i zostaw ocenę"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addOpinionButton"
+            android:layout_below="@+id/addOpinionRatingBar"
+            android:background="@drawable/rounded_button_active"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Dodaj opinię"/>
+
+        <RatingBar
+            android:id="@+id/addOpinionRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:rating="1"
+            android:stepSize="0.5"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:isIndicator="false"
+            android:layout_below="@+id/opinionContent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

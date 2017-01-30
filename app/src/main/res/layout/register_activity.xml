@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.RegisterActivity"
+    android:background="#FF3FA6B5">
+
+    <include
+        android:id="@+id/registerPageToolbar"
+        layout="@layout/toolbar2"
+        ></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerPageToolbar"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:paddingTop="12dip"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerUserName"
+            android:hint="Imię"
+            android:background="#FFFFFF"
+            android:padding="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerPassword"
+            android:layout_below="@+id/registerEmail"
+            android:padding="10dp"
+            android:inputType="textPassword"
+            android:hint="Hasło(min. 6 znaków)"
+            android:background="#FFFFFF"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerPhoneNumber"
+            android:layout_below="@+id/registerPassword"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:hint="Numer telefonu"
+            android:background="#FFFFFF"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerUserSurname"
+            android:padding="10dp"
+            android:hint="Nazwisko"
+            android:background="#FFFFFF"
+            android:layout_below="@+id/registerUserName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerEmail"
+            android:padding="10dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_below="@+id/registerUserSurname"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="14dp"
+            android:background="#FFFFFF"/>
+
+        <Button
+            android:text="ZAREJESTRUJ"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/registerPhoneNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:enabled="false"
+            android:id="@+id/registerButton" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

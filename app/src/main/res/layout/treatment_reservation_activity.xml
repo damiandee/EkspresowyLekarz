@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_treatment_reservation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.TreatmentReservationActivity">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/treatmentReservationsList"
+        android:divider="#808080"
+        android:dividerHeight="1dp"
+        android:background="@drawable/rounded_border"
+        android:padding="5dp"></ListView>
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "81185824526",
+    "firebase_url": "https://ekspresowylekarzapp.firebaseio.com",
+    "project_id": "ekspresowylekarzapp",
+    "storage_bucket": "ekspresowylekarzapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81185824526:android:2d2f8b0dfcadb57e",
+        "android_client_info": {
+          "package_name": "praca_inzynierska.damian_deska.ekspresowylekarz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81185824526-viad4o089jiusdao78habar9mvv47e8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "praca_inzynierska.damian_deska.ekspresowylekarz",
+            "certificate_hash": "CF647B5AE63305FDE5DB8745C4305A5783E8526E"
+          }
+        },
+        {
+          "client_id": "81185824526-h8jbd28b5ovc6tsuogfa0k6htg7btd6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAnfqUVaDXZDiDSZHO7FeENDN9Cu5qTCI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81185824526-h8jbd28b5ovc6tsuogfa0k6htg7btd6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

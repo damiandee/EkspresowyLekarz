@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/remove_reservation_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.CancelReservationActivity">
+
+    <include
+        android:id="@+id/removeReservationToolbar"
+        layout="@layout/toolbar"
+        ></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_below="@+id/removeReservationToolbar"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_border"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeQuestion"
+            android:text="Czy na pewno chcesz odwołać następującą wizytę?"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeVisitLinearLayout"
+            android:layout_below="@id/removeQuestion"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/visitName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:textStyle="bold"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/visitDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/visitName" />
+
+            <TextView
+                android:id="@+id/visitTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/visitDate"
+                android:layout_alignBottom="@+id/visitName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeVisitInfoLinearLayout"
+            android:layout_below="@+id/removeVisitLinearLayout"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/visitDoctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                />
+
+            <TextView
+                android:id="@+id/visitDoctorAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                />
+
+            <TextView
+                android:id="@+id/visitCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeReservationButton"
+            android:layout_below="@+id/removeVisitInfoLinearLayout"
+            android:background="@drawable/rounded_button_inactive"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

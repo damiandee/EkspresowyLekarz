@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">EkspresowyLekarz</string>
+
+    <string name="advanced_search">Wyszukiwarka zaawansowana</string>
+    <string name="your_profile">Twoje konto</string>
+    <string name="your_visits">Twoje wizyty</string>
+    <string name="logout">Wyloguj się</string>
+    <string name="signin">Zaloguj się</string>
+
+
+    <string-array name="navigation_drawer_items_array">
+        <item>Connect</item>
+        <item>Fixtures</item>
+        <item>Table</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_advanced_search">AdvancedSearchActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>

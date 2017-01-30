@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:id="@+id/opinionInfoItem">
+
+        <ImageView
+            android:id="@+id/patientAvatar"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/stub"
+            android:scaleType="centerCrop"   />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:layout_toRightOf="@+id/patientAvatar"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/patientName"/>
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/opinionDate"
+                android:layout_below="@+id/patientName" />
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/opinionContent"
+        android:layout_below="@+id/opinionInfoItem"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingItem"
+        android:layout_alignParentTop="true">
+
+        <RatingBar
+            android:id="@+id/opinionRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:isIndicator="true"
+            android:paddingTop="11dip"
+            android:layout_marginRight="26dp"
+            android:layout_marginEnd="26dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
