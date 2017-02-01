@@ -2,10 +2,8 @@ package praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -43,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     ListView specializationsListListView;
     EditText searchInput;
     Button loginButton;
-    Toolbar mainToolbar;
 
     private Drawer result = null;
 
@@ -52,30 +49,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_acitivity);
 
-       /* Intent intent = getIntent();
-        String title = intent.getExtras().getString("title");
-        String body = intent.getExtras().getString("body");
-        if( title != null) {
-            new AlertDialog.Builder(getApplicationContext())
-                    .setTitle(title)
-                    .setMessage(body)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }*/
-
         searchInput = (EditText)findViewById(R.id.searchInput);
 
         loginButton = (Button)findViewById(R.id.loginButton);
+        /*sprawdzenie, czy uzytkownik jest zalogowany, jezeli nie, widoczny jest przycisk loowania*/
         if(UserSession.getSession().isLoggedIn()) {
             loginButton.setVisibility(View.GONE);
         }
 
-        //initProfileToolbar();
+        /*sprawdzenie, czy uzytkownik jest zalogowany i inicjalizacja odpowiedniego menu bocznego na tej podstawie*/
         if(UserSession.getSession().isLoggedIn()) {
             initUserSideMenu();
         } else {
@@ -84,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         databaseConnectionController = DatabaseConnectionController.getInstance();
 
+        /*wyplenienie listy specjalizacji i inicjalizacja listenera na polu wyszukiwarki*/
         specializationsListListView =(ListView)findViewById(R.id.specializationList);
         fillSpecializationsList();
         initSpecializationsSearchInput();
@@ -99,42 +82,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void sendNotification(View view) {
-
-//Get an instance of NotificationManager//
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.stub)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
-
-
-// Gets an instance of the NotificationManager service//
-
-        NotificationManager mNotificationManager =
-
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-
-                mNotificationManager.notify(001, mBuilder.build());
-    }
-    
+    /*funkcja tworzace menu boczne dla uzytkownika zalogowanego*/
     void initUserSideMenu() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        //Create the drawer
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
+                /*dodanie poszczegolnych pozycji w menu bocznym*/
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.advanced_search).withIcon(R.drawable.search_icon).withIdentifier(1).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.your_profile).withIcon(R.drawable.profile_icon).withIdentifier(2).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.your_visits).withIcon(R.drawable.calendar_icon).withIdentifier(3).withSelectable(false),
                         new PrimaryDrawerItem().withName(R.string.logout).withIcon(R.drawable.logout_icon).withIdentifier(4).withSelectable(false)
                         )
+                /*listener uruchamiajacy akcje po kliknieciu na dany element menu*/
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -172,12 +136,12 @@ public class MainActivity extends AppCompatActivity {
                 }).build();
     }
 
+    /*funkcja tworzace menu boczne dla uzytkownika niezalogowanego*/
     void initSideMenu() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        //Create the drawer
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -223,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //handle the back press :D close the drawer first and if the drawer is closed close the activity
+        /*funkcja obslugujaca przycisk wstecz - najpierw zamyka menu boczne, a jezeli juz zostlao to zrobione, zatrzymuje cala aktywnosc*/
         if (result != null && result.isDrawerOpen()) {
             result.closeDrawer();
         } else {
@@ -231,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*wypelnienie listy specjalizacji*/
     public void fillSpecializationsList() {
         specializationsList = databaseConnectionController.getAllSpecializationsList();
         specializationsNamesList = new ArrayList<>();
@@ -245,11 +210,14 @@ public class MainActivity extends AppCompatActivity {
         ImageLoaderConfiguration imageLoaderConfiguration = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(imageLoaderConfiguration);
 
+        /*listener na kazdej specjalizacji*/
         specializationsListListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, DoctorsListActivity.class);
+                /*pobranie nazwy wybranej specjalizacji*/
                 String searchedSpecializationName = specializationsNamesList.get(position);
+                /*jezeli uzyto wyszukiwarki, id w liscie sie przesuwaja, nalezy wiec w calej liscie wyszukac wpisana nazwe specjalizacji*/
                 if(searchInput.getText().toString().length() > 0) {
                     for(String specializationName : specializationsNamesList) {
                         if(specializationName.toLowerCase().startsWith(searchInput.getText().toString().toLowerCase())) {
@@ -257,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                /*dodanie do intencji nazwy wybranej specjalizacji, uruchomenie nowej aktywnosci*/
                 intent.putExtra("selectedSpecializationName", searchedSpecializationName);
                 startActivity(intent);
                 finish();
@@ -264,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*listener na wyszukiwarke, odpalany w przypadku zmiany wpisanego tekstu*/
     private void initSpecializationsSearchInput() {
         searchInput.addTextChangedListener(new TextWatcher() {
 
@@ -275,13 +245,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
                                           int arg3) {
-                // TODO Auto-generated method stub
-
             }
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
             }
         });
     }

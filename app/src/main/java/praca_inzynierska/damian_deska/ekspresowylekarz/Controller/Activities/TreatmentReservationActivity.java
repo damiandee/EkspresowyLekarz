@@ -27,8 +27,6 @@ public class TreatmentReservationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.treatment_reservation_activity);
 
-
-
         databaseConnectionController = DatabaseConnectionController.getInstance();
 
         Intent intent = getIntent();
@@ -45,6 +43,7 @@ public class TreatmentReservationActivity extends AppCompatActivity {
         treatmentReservationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*dodanie do intencji informacji o rezerwacji*/
                 Intent i = new Intent(TreatmentReservationActivity.this, ReservationConfirmAcitivity.class);
                 i.putExtra("treatmentID", treatmentDateModels.get(position).getTreatmentID());
                 i.putExtra("doctorID", treatmentDateModels.get(position).getDoctorID());

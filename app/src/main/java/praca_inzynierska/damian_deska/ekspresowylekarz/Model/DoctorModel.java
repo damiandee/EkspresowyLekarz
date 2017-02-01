@@ -3,8 +3,9 @@ package praca_inzynierska.damian_deska.ekspresowylekarz.Model;
 /**
  * Created by Damian Deska on 2017-01-10.
  */
-
+/*klasa reprezentujaca lekarza*/
 public class DoctorModel{
+    /*pola reprezentujace informacje o lekarzy (kolumny tabeli)*/
     private int doctorID;
     private String doctorName;
     private String doctorSurname;
@@ -22,6 +23,8 @@ public class DoctorModel{
 
     private float doctorRating;
     private float doctorDistance;
+
+    /*gettery i settery klasy*/
 
     public String getDoctorDescription() {
         return doctorDescription;

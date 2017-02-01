@@ -12,7 +12,7 @@ import android.widget.TabHost;
 
 import praca_inzynierska.damian_deska.ekspresowylekarz.R;
 
-public class AdvancedSearchInitializationActivity extends TabActivity implements AppCompatCallback{
+public class AdvancedSearchInitializationActivity extends TabActivity implements AppCompatCallback {
 
     private AppCompatDelegate delegate;
     Toolbar advancedSearchToolbar;
@@ -24,8 +24,7 @@ public class AdvancedSearchInitializationActivity extends TabActivity implements
 
         TabHost tabHost = getTabHost();
 
-        //initToolbar();
-
+        //stworzenie 2 zakladek w wyszukiwarce zaawansowanej
         Intent intent = new Intent(this, AdvancedSearchActivity.class);
         TabHost.TabSpec tabSpec1 = tabHost.newTabSpec("Lista");
         tabSpec1.setIndicator("Lista");
@@ -41,13 +40,8 @@ public class AdvancedSearchInitializationActivity extends TabActivity implements
 
         delegate = AppCompatDelegate.create(this, this);
 
-        //we need to call the onCreate() of the AppCompatDelegate
         delegate.onCreate(savedInstanceState);
 
-        //we use the delegate to inflate the layout
-        //delegate.setContentView(R.layout.advanced_search_initialization_activity);
-
-        //Finally, let's add the Toolbar
         advancedSearchToolbar = (Toolbar) findViewById(R.id.advancedSearchInitToolbar);
         delegate.setSupportActionBar(advancedSearchToolbar);
 
@@ -68,17 +62,17 @@ public class AdvancedSearchInitializationActivity extends TabActivity implements
 
     @Override
     public void onSupportActionModeStarted(ActionMode mode) {
-        //let's leave this empty, for now
     }
 
     @Override
     public void onSupportActionModeFinished(ActionMode mode) {
-        // let's leave this empty, for now
     }
 
     @Override
     public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
         return null;
-    };
+    }
+
+    ;
 
 }

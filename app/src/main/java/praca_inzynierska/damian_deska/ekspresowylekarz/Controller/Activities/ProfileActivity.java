@@ -40,8 +40,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         initProfileToolbar();
 
+        /*pobranie informacji o zalogowanym pacjencie*/
         final PatientModel currentPatient = databaseConnectionController.getPatientInfo(UserSession.getSession().getUserID());
 
+        /*inicjalizacja obiektow widoku i uzupelnienie ich danymi pacjenta*/
         profileName = (EditText)findViewById(R.id.profileUserName);
         profileName.setBackgroundResource(R.drawable.rounded_border);
         profileName.setText(currentPatient.getPatientName());
@@ -63,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*aktualizacja danych pacjenta*/
                 PatientModel tmpPatient = new PatientModel();
                 tmpPatient.setPatientID(UserSession.getSession().getUserID());
                 tmpPatient.setPatientName(profileName.getText().toString());
@@ -95,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
                 changePasswordButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        /*sprawdzenie, czy nowe haslo wpisano identycznie w obu polach*/
                         if(!newPassword.getText().toString().equals(newPasswordRepeat.getText().toString())) {
                             Toast.makeText(getApplicationContext(), "Nowe hasła nie są identyczne", Toast.LENGTH_LONG).show();
                             newPassword.setBackgroundResource(R.drawable.rounded_border_red);
@@ -103,10 +107,13 @@ public class ProfileActivity extends AppCompatActivity {
                             newPassword.setBackgroundResource(R.drawable.rounded_border);
                             newPasswordRepeat.setBackgroundResource(R.drawable.rounded_border);
 
+                            /*szyfrowanie starego i nowego hasla*/
                             String oldHashedPassword = md5Hasher.hashToMD5(oldPassword.getText().toString());
                             String newHashedPassword = md5Hasher.hashToMD5(newPassword.getText().toString());
 
+                            /*sprawdzenie, czy wpisano poprawnie stare haslo*/
                             if(oldHashedPassword.equals(currentPatient.getPatientPassword())){
+                                /*jezeli tak, zmiana hasla i odswiezenie aktywnosci*/
                                 databaseConnectionController.changePassword(newHashedPassword);
 
                                     Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
@@ -114,6 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     finish();
                                 Toast.makeText(getApplicationContext(), "Pomyślnie zmieniono hasło", Toast.LENGTH_LONG).show();
                             } else {
+                                /*jezeli nie, wyswietlany jest komunikat*/
                                 Toast.makeText(getApplicationContext(), "Wprowadzono niepoprawne stare hasło", Toast.LENGTH_LONG).show();
                             }
                         }

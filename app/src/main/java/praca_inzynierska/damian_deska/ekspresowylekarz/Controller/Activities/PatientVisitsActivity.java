@@ -33,16 +33,9 @@ public class PatientVisitsActivity extends AppCompatActivity {
 
         patientVisitsList = databaseConnectionController.getPatientVisitsList(UserSession.getSession().getUserID());
 
-
-
         PatientVisitsAdapter patientVisitsAdapter = new PatientVisitsAdapter(this, patientVisitsList);
         patientVisitsListView.setAdapter(patientVisitsAdapter);
 
-        /*patientVisitsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "KLIK", Toast.LENGTH_LONG).show();
-            }
-        });*/
     }
 
     public void initToolbar() {

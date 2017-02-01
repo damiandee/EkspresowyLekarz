@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         md5Hasher = new MD5Hasher();
         addEditTextListeners();
 
+        /*walidator sprawdzajacy dane wpisane do formularza*/
         formDataValidator = new FormDataValidator();
 
         initToolbar();
@@ -69,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*sprawdzenie poprawnosci i zalogowanie uzytkownika, zapisanie do grupy*/
                 if(isLoginFormDataValid(userEmail.getText().toString(), userPassword.getText().toString())){
                     signIn();
                     if(UserSession.getSession().isLoggedIn()) {
@@ -101,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn() {
         String username = userEmail.getText().toString();
         String password = md5Hasher.hashToMD5(userPassword.getText().toString());
+        /*dodatkowe sprawdzenie, czy ktores z pol nie jest puste*/
         if(username.trim().equals("")|| password.trim().equals("")) {
             Toast.makeText(getApplicationContext(), "Nieprawidłowe dane logowania", Toast.LENGTH_LONG).show();
             return;
@@ -110,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         databaseConnectionController.signIn(getApplicationContext(), username, password);
     }
 
+    /*listener aktywujacy przycisk logowania w przypadku wprowadzenie danych odpowiedniej dlugosci do obu pol*/
     private void addEditTextListeners() {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -128,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         userPassword.addTextChangedListener(textWatcher);
     }
 
+    /*funkcja aktywujaca przycisk logowania w przypadku wprowadzenie danych odpowiedniej dlugosci do obu pol*/
     private void updateSignInButtonState() {
         if(userEmail.getText().length() > 2 && userPassword.getText().length() > 2) {
             loginButton.setBackgroundResource(R.drawable.rounded_button_active);
@@ -138,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /*sprawdzenie poprawnosci wprowadzonych danych*/
     private boolean isLoginFormDataValid(String email, String password) {
         boolean isFormCorrect = true;
 

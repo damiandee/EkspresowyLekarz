@@ -12,6 +12,7 @@ import praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Fragments.Page
  */
 
 public class PageFragmentAdapter extends FragmentPagerAdapter {
+    /*informacje o fragmentach w adapterze; ilosc zakladek i ich nazwy*/
     final int PAGE_COUNT = 3;
     private String tabTitles[] = new String[] { "Usługi", "O Lekarzu", "Opinie" };
     private Context context;
@@ -23,19 +24,21 @@ public class PageFragmentAdapter extends FragmentPagerAdapter {
         this.doctorID = doctorID;
     }
 
+    /*funkcja zwraca ilosc zakladek*/
     @Override
     public int getCount() {
         return PAGE_COUNT;
     }
 
+    /*funkcja zwraca wybrany przez uzytkownika fragment*/
     @Override
     public Fragment getItem(int position) {
         return PageFragment.newInstance(position + 1, doctorID);
     }
 
+    /*funkcja zwraca nazwe odpowiedniej zakladki*/
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
         return tabTitles[position];
     }
 }

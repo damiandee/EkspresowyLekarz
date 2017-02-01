@@ -4,6 +4,7 @@ package praca_inzynierska.damian_deska.ekspresowylekarz.Model;
  * Created by Damian Deska on 2017-01-18.
  */
 
+/*klasa reprezentujaca rezerwacje*/
 public class VisitModel {
 
     private int visitID;

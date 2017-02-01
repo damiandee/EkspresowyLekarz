@@ -41,14 +41,14 @@ public class AddOpinionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_opinion_activity);
-
+        /*wydobycie ID_terminu z intencji*/
         Intent intent = getIntent();
         treatmentDateID = intent.getExtras().getInt("treatmentDateID");
 
         databaseConnectionController = DatabaseConnectionController.getInstance();
-
+        /*inicjacja toolbara*/
         initToolbar();
-
+        /*inicjacja obiektu widoku*/
         treatmentDate = databaseConnectionController.getTreatmentDateInfo(treatmentDateID);
         treatment = databaseConnectionController.getTreatmentInfo(treatmentDate.getTreatmentID());
         doctor = databaseConnectionController.getDoctorInfo(treatment.getDoctorID());
@@ -76,10 +76,11 @@ public class AddOpinionActivity extends AppCompatActivity {
         opinionRatingBar = (RatingBar)findViewById(R.id.addOpinionRatingBar);
 
         addOpinionButton = (Button)findViewById(R.id.addOpinionButton);
-
+        /*ustawienie listenera na przycisk*/
         addOpinionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*stworzenie nowego obiektu opinii i wysłanie go do bazy*/
                 OpinionModel opinion = new OpinionModel();
                 opinion.setDoctorID(doctor.getDoctorID());
                 opinion.setPatientID(patient.getPatientID());
@@ -90,7 +91,7 @@ public class AddOpinionActivity extends AppCompatActivity {
 
                 databaseConnectionController.addOpinion(opinion, visit.getVisitID());
                 opinion = null;
-
+                /*uruchomienie nowej intencji*/
                 Intent i = new Intent(getApplicationContext(), PatientVisitsActivity.class);
                 startActivity(i);
                 finish();
@@ -98,33 +99,6 @@ public class AddOpinionActivity extends AppCompatActivity {
         });
     }
 
-  /*  private void addEditTextListeners() {
-        TextWatcher textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {updateAddOpinionButtonState();}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        };
-
-        opinionContent.addTextChangedListener(textWatcher);
-    }
-
-    public void updateAddOpinionButtonState() {
-        if(opinionContent.getText().toString().length() > 1) {
-            addOpinionButton.setEnabled(true);
-            addOpinionButton.setBackgroundResource(R.drawable.rounded_button_active);
-        } else {
-            addOpinionButton.setEnabled(false);
-            addOpinionButton.setBackgroundResource(R.drawable.rounded_button_inactive);
-        }
-    }
-*/
     public void initToolbar() {
         addOpinionToolbar = (Toolbar)findViewById(R.id.addOpinionToolbar);
         setSupportActionBar(addOpinionToolbar);

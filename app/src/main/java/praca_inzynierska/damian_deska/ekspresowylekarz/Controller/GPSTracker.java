@@ -1,9 +1,5 @@
 package praca_inzynierska.damian_deska.ekspresowylekarz.Controller;
 
-/**
- * Created by Damian Deska on 2017-01-18.
- */
-
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -21,28 +17,19 @@ import android.provider.Settings;
 import android.util.Log;
 
 /**
- * Created by ANQ on 8/8/2016.
+ * Created by Damian Deska on 2017-01-18.
  */
-
 public class GPSTracker extends Service implements LocationListener {
 
     private final Context mContext;
-
-
     boolean checkGPS = false;
-
-
     boolean checkNetwork = false;
-
     boolean canGetLocation = false;
-
     Location loc;
     double latitude;
     double longitude;
 
-
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-
 
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
@@ -58,18 +45,19 @@ public class GPSTracker extends Service implements LocationListener {
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
-            // getting GPS status
+            /*sprawdzenie dostepnosci pobrania lokalizacji z GPS*/
             checkGPS = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-            // getting network status
+            /*sprawdzenie dostepnosci pobrania lokalizacji na podstawie polaczenia z Internetem*/
             checkNetwork = locationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
 
             if (!checkGPS && !checkNetwork) {
             } else {
                 this.canGetLocation = true;
-                // First get location from Network Provider
+                /*proba pobrania lokalizacji na podstawie sieci*/
                 if (checkNetwork) {
 
                     try {
@@ -78,22 +66,23 @@ public class GPSTracker extends Service implements LocationListener {
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                         if (locationManager != null) {
+                            /*pobrania ostatniej znanej lokalizacji, o ile istnieje*/
                             loc = locationManager
                                     .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
                         }
 
                         if (loc != null) {
+                            /*pobranie wspolrzednych pacjenta*/
                             latitude = loc.getLatitude();
                             longitude = loc.getLongitude();
                         }
-                    }
-                    catch(SecurityException e){
+                    } catch (SecurityException e) {
 
                     }
                 }
             }
-            // if GPS Enabled get lat/long using GPS Services
+            /*pobranie lokalizacji pacjenta poprzez GPS, o ile mozliwe*/
             if (checkGPS) {
                 if (loc == null) {
                     try {
@@ -123,6 +112,7 @@ public class GPSTracker extends Service implements LocationListener {
         return loc;
     }
 
+    /*pobranie dlugosci geograficznej uzytkownika*/
     public double getLongitude() {
         if (loc != null) {
             longitude = loc.getLongitude();
@@ -130,6 +120,7 @@ public class GPSTracker extends Service implements LocationListener {
         return longitude;
     }
 
+    /*pobranie szerokosci geograficznej pacjenta*/
     public double getLatitude() {
         if (loc != null) {
             latitude = loc.getLatitude();
@@ -137,48 +128,6 @@ public class GPSTracker extends Service implements LocationListener {
         return latitude;
     }
 
-    public boolean canGetLocation() {
-        return this.canGetLocation;
-    }
-
-    public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-
-        alertDialog.setTitle("GPS Not Enabled");
-
-        alertDialog.setMessage("Do you wants to turn On GPS");
-
-
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
-        });
-
-
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-
-        alertDialog.show();
-    }
-
-
-    public void stopUsingGPS() {
-        try {
-            if (locationManager != null) {
-
-                locationManager.removeUpdates(GPSTracker.this);
-            }
-        } catch (SecurityException se) {
-
-        }
-    }
 
     @Override
     public IBinder onBind(Intent intent) {

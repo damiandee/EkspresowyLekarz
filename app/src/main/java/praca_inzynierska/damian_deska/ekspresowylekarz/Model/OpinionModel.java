@@ -6,6 +6,7 @@ import java.sql.Date;
  * Created by Damian Deska on 2017-01-14.
  */
 
+/*klasa reprezentujaca obiekt opinii o lekarzu*/
 public class OpinionModel {
     private int opinionID;
     private int doctorID;

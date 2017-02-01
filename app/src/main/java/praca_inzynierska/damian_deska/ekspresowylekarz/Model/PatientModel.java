@@ -4,6 +4,7 @@ package praca_inzynierska.damian_deska.ekspresowylekarz.Model;
  * Created by Damian Deska on 2017-01-14.
  */
 
+/*klasa reprezentujaca pacjenta*/
 public class PatientModel {
     private int patientID;
     private String patientName;

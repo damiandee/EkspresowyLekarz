@@ -22,6 +22,7 @@ public class UserSession {
 
     }
 
+    /*zwrocenie obiektu Singleton sesji uzytkownika*/
     public static UserSession getSession() {
         if(userSession == null) {
             userSession = new UserSession();
@@ -29,16 +30,19 @@ public class UserSession {
         return userSession;
     }
 
+    /*zalogowanie uzytkownika, zapisanie jego ID*/
     public void signIn(int userID) {
         this.isLoggedIn = true;
         this.userID = userID;
     }
 
+    /*wylogowanie uzytkownika*/
     public void logout() {
         this.isLoggedIn = false;
         this.userID = 0;
     }
 
+    /*gettery i settery klasy*/
     public boolean isLoggedIn() {
         return isLoggedIn;
     }

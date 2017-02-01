@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -43,7 +42,6 @@ public class DoctorPageActivity extends AppCompatActivity {
     ImageView doctorAvatar;
     TextView doctorName;
     TextView specName;
-    RatingBar doctorPageRatingBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,18 +59,16 @@ public class DoctorPageActivity extends AppCompatActivity {
         databaseConnectionController = DatabaseConnectionController.getInstance();
         doctor = databaseConnectionController.getDoctorInfo(doctorID);
 
-        doctorAvatar = (ImageView)findViewById(R.id.doctorPageAvatar);
+        doctorAvatar = (ImageView) findViewById(R.id.doctorPageAvatar);
+        /*pobrania avatara lekarza poprzez biblioteke Picasso*/
         Picasso.with(getApplicationContext()).load(doctor.getDoctorAvatarURL()).into(doctorAvatar);
 
-        doctorName = (TextView)findViewById(R.id.doctorPageDoctorName);
-        doctorName.setText(doctor.getDoctorName() + " "  + doctor.getDoctorSurname());
+        doctorName = (TextView) findViewById(R.id.doctorPageDoctorName);
+        doctorName.setText(doctor.getDoctorName() + " " + doctor.getDoctorSurname());
 
-        specName = (TextView)findViewById(R.id.doctorPageSpecName);
+        specName = (TextView) findViewById(R.id.doctorPageSpecName);
         SpecializationModel specializationModel = databaseConnectionController.getSpecializationInfo(doctor.getSpecjalizationID());
         specName.setText(specializationModel.getSpecializationName());
-
-        //doctorPageRatingBar = (RatingBar)findViewById(R.id.doctorPageRatingBar);
-        //doctorPageRatingBar.setRating(doctor.getDoctorRating());
 
         initGallery();
 
@@ -80,37 +76,10 @@ public class DoctorPageActivity extends AppCompatActivity {
         viewPager.setAdapter(new PageFragmentAdapter(getSupportFragmentManager(),
                 DoctorPageActivity.this, doctorID));
 
-/*        ViewPager wrapContentViewPager = (ViewPager) findViewById(R.id.viewpager);
-        wrapContentViewPager.setAdapter(new PageFragmentAdapter(getSupportFragmentManager(),
-                DoctorPageActivity.this, doctorID));*/
-/*
-        wrapContentViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                wrapContentViewPager.reMeasureCurrentPage(wrapContentViewPager.getCurrentItem());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });*/
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-/*        docAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View treatmentsListView) {
-                Intent intent = new Intent(DoctorPageActivity.this, DatePickerActivity_To_Remove.class);
-                startActivity(intent);
-            }
-        });*/
     }
 
     @Override
@@ -120,23 +89,21 @@ public class DoctorPageActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy()
-    {
-        //list.setAdapter(null);
+    public void onDestroy() {
         super.onDestroy();
     }
 
-
+    /*funkcja tworzaca galerie carousel, hashmapa mapuje adres zdjecia razem z jego opisem*/
     public void initGallery() {
         sliderShow = (SliderLayout) findViewById(R.id.slider);
         HashMap<String, String> doctorGalleryUrlsList = databaseConnectionController.getDoctorGalleryUrlsList(doctorID);
         Set set = doctorGalleryUrlsList.entrySet();
-        Iterator iterator =  set.iterator();
+        Iterator iterator = set.iterator();
 
-        while(iterator.hasNext()) {
-            Map.Entry mapEntry = (Map.Entry)iterator.next();
+        while (iterator.hasNext()) {
+            Map.Entry mapEntry = (Map.Entry) iterator.next();
             textSliderView = new TextSliderView(this);
-            if(mapEntry.getValue() != null) {
+            if (mapEntry.getValue() != null) {
                 textSliderView.description(mapEntry.getValue().toString());
             }
             textSliderView.image(mapEntry.getKey().toString());
@@ -145,7 +112,7 @@ public class DoctorPageActivity extends AppCompatActivity {
     }
 
     public void initToolbar() {
-        doctorPageToolbar = (Toolbar)findViewById(R.id.doctorPageToolbar);
+        doctorPageToolbar = (Toolbar) findViewById(R.id.doctorPageToolbar);
         setSupportActionBar(doctorPageToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

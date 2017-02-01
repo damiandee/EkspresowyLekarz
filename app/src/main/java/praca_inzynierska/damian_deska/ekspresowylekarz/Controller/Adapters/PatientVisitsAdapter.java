@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,14 +26,13 @@ import praca_inzynierska.damian_deska.ekspresowylekarz.R;
  * Created by Damian Deska on 2017-01-14.
  */
 
-public class PatientVisitsAdapter extends BaseAdapter{
+public class PatientVisitsAdapter extends BaseAdapter {
 
     private Activity context;
     private ArrayList<VisitModel> data;
-    private static LayoutInflater inflater=null;
+    private static LayoutInflater inflater = null;
     VisitModel visit;
     DatabaseConnectionController databaseConnectionController;
-    boolean isExpanded = false;
     TextView visitNote;
 
 
@@ -60,8 +57,8 @@ public class PatientVisitsAdapter extends BaseAdapter{
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         View vi = convertView;
-        try{
-            if(convertView==null)
+        try {
+            if (convertView == null)
                 vi = inflater.inflate(R.layout.patient_visits_item, null);
 
             visit = data.get(position);
@@ -70,38 +67,38 @@ public class PatientVisitsAdapter extends BaseAdapter{
             DoctorModel doctor = databaseConnectionController.getDoctorInfo(treatment.getDoctorID());
 
 
-            TextView visitName = (TextView)vi.findViewById(R.id.visitName);
+            TextView visitName = (TextView) vi.findViewById(R.id.visitName);
             visitName.setText(treatment.getTreatmentName());
-            //treatmentName.setText(data.get(position).getTreatmentTime());
 
-            TextView visitDate = (TextView)vi.findViewById(R.id.visitDate);
+            TextView visitDate = (TextView) vi.findViewById(R.id.visitDate);
             visitDate.setText(treatmentDateModel.getTreatmentDate());
-            TextView visitTime = (TextView)vi.findViewById(R.id.visitTime);
+            TextView visitTime = (TextView) vi.findViewById(R.id.visitTime);
             visitTime.setText("godz. " + treatmentDateModel.getTreatmentTime());
 
-            TextView visitDoctor = (TextView)vi.findViewById(R.id.visitDoctor);
+            TextView visitDoctor = (TextView) vi.findViewById(R.id.visitDoctor);
             visitDoctor.setText(doctor.getDoctorName() + " " + doctor.getDoctorSurname());
 
-            TextView visitDoctorAddress = (TextView)vi.findViewById(R.id.visitDoctorAddress);
+            TextView visitDoctorAddress = (TextView) vi.findViewById(R.id.visitDoctorAddress);
             visitDoctorAddress.setText(doctor.getDoctorStreet() + ", " + doctor.getDoctorCity());
 
-            TextView visitCost = (TextView)vi.findViewById(R.id.visitCost);
+            TextView visitCost = (TextView) vi.findViewById(R.id.visitCost);
             visitCost.setText("Cena: " + treatment.getTreatmentCost() + "zł");
 
-            visitNote = (TextView)vi.findViewById(R.id.visitNote);
+            visitNote = (TextView) vi.findViewById(R.id.visitNote);
 
-            final Button visitButton = (Button)vi.findViewById(R.id.visitButton);
-            //visitButton.setOnClickListener(listener);
+            final Button visitButton = (Button) vi.findViewById(R.id.visitButton);
             visitNote.setVisibility(View.GONE);
-            if(visit.getIsCancelled() == 0) {
+            /*ustawienie widoku rezerwacji wedlug jej statusu*/
+            /*sprawdzenie, czy rezerwacja nie jest odwolana*/
+            if (visit.getIsCancelled() == 0) {
+                /*sprawdzenie, czy rezerwacja jest juz zakonczona*/
                 if (visit.getIsEnded() == 1) {
                     vi.setBackgroundColor(Color.parseColor("#FFB8B8B8"));
-                    if(visit.getVisitNote() != null) {
-                        //visitNote.setVisibility(View.VISIBLE);
-                        //visitNote.setText(visit.getVisitNote());
+                    if (visit.getVisitNote() != null) {
                     } else {
                         visitNote.setVisibility(View.GONE);
-                }
+                    }
+                    /*sprawdzenie, czy zakonczona rezerwacja zostala juz oceniona*/
                     if (visit.getIsReviewed() != 1) {
                         visitButton.setEnabled(true);
                         visitButton.setText("Dodaj Opinię");
@@ -124,11 +121,13 @@ public class PatientVisitsAdapter extends BaseAdapter{
                 visitButton.setEnabled(false);
             }
 
+            /*listener na przycisk pod kazda rezerwacja, w zaleznosci od jej statusu uruchamia aktywnosc do odwolania lub
+            * ocenienia wizyty*/
             visitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent;
-                    if(data.get(position).getIsEnded() == 0) {
+                    if (data.get(position).getIsEnded() == 0) {
                         intent = new Intent(context.getApplicationContext(), CancelReservationActivity.class);
                         intent.putExtra("treatmentDateID", treatmentDateModel.getTreatmentDateID());
                     } else {

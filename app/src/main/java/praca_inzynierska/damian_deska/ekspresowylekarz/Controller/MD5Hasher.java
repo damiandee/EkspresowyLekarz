@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 
 public class MD5Hasher {
 
+    /*funkcja odpowiedzialna za zaszyfrowania hasla i stworzenie 128-bitowego skrotu*/
     public String hashToMD5(String password) {
         String hashText = null;
         try {
@@ -19,6 +20,7 @@ public class MD5Hasher {
             BigInteger bigInt = new BigInteger(1, digest);
             hashText = bigInt.toString(16);
 
+            /*w przypadku zbyt krotkiego skrotu, uzupelniany jest on zerami wiodacymi*/
             while (hashText.length() < 32) {
                 hashText = "0" + hashText;
             }

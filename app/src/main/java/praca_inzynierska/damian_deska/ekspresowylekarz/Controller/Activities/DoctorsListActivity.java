@@ -17,8 +17,6 @@ import praca_inzynierska.damian_deska.ekspresowylekarz.Model.DoctorModel;
 import praca_inzynierska.damian_deska.ekspresowylekarz.Model.SpecializationModel;
 import praca_inzynierska.damian_deska.ekspresowylekarz.R;
 
-//import praca_inzynierska.damian_deska.ekspresowylekarz.LazyImageAdapter.LazyImageAdapter;
-
 /**
  * Created by Damian Deska on 2017-01-10.
  */
@@ -28,7 +26,6 @@ public class DoctorsListActivity extends AppCompatActivity {
     String choosenSpecializationName;
     ListView list;
     Toolbar doctorListToolbar;
-    //LazyImageAdapter adapter;
     ArrayList<DoctorModel> doctorModels;
     DatabaseConnectionController databaseConnectionController;
 
@@ -47,7 +44,6 @@ public class DoctorsListActivity extends AppCompatActivity {
         specializationName.setText(specialization.getSpecializationName());
         list=(ListView)findViewById(R.id.list);
         doctorModels = databaseConnectionController.getDoctorsFromSpecialization(specialization.getSpecializationID());
-        //adapter=new LazyImageAdapter(this, doctorModels);
         AdvancedSearchAdapter adapter = new AdvancedSearchAdapter(this, doctorModels);
         list.setAdapter(adapter);
 
@@ -64,7 +60,6 @@ public class DoctorsListActivity extends AppCompatActivity {
     @Override
     public void onDestroy()
     {
-        //list.setAdapter(null);
         super.onDestroy();
     }
 

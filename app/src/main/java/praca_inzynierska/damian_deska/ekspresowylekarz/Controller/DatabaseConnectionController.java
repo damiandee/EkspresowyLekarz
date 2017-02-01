@@ -28,38 +28,35 @@ import praca_inzynierska.damian_deska.ekspresowylekarz.Model.VisitModel;
 
 public class DatabaseConnectionController {
 
-    /*String ip = "192.168.0.104";
-    String driverClass = "net.sourceforge.jtds.jdbc.Driver";
-    String db = "EkspresowyLekarz";
-    String un = "sa";
-    String password = "sql2014";*/
-
     String ip = "ekspresowylekarz.database.windows.net";
     String driverClass = "net.sourceforge.jtds.jdbc.Driver";
     String db = "EkspresowyLekarz";
     String un = "ekspresowylekarz";
     String password = "!sql2014";
 
+    /*zmienna zawieracaja dlugie zapytanie pobierajace wszystkie informacje o lekarza, lacznie z jego srednia ocena zaokraglona*/
     String doctorInfoQuery = "select l.ID_lekarza, l.Imie, l.Nazwisko, l.ID_specjalizacji, l.Opis, l.Ulica, l.Miasto, l.Telefon, " +
             "l.Strona_internetowa, l.Nfz, l.Platnosc_karta, l.Parking, l.Niepelnosprawni, l.Avatar_URL, " +
             "(select round(avg(cast(Ocena as float)), 2) from Opinie where ID_lekarza=l.ID_lekarza group by ID_lekarza) " +
             "as [Srednia] from Lekarze l where";
 
     private static DatabaseConnectionController instance = null;
-    Connection databaseConnection;// = this.newConnection();
+    Connection databaseConnection;
     MD5Hasher md5Hasher = new MD5Hasher();
 
     private DatabaseConnectionController() {
         this.databaseConnection = newConnection();
     }
 
+    /*funkcja zwracajaj obiekt kontrolera, singleton*/
     public static DatabaseConnectionController getInstance() {
         if (instance == null) {
-             instance = new DatabaseConnectionController();
+            instance = new DatabaseConnectionController();
         }
         return instance;
     }
 
+    /*funkcja tworzaca polaczenie z baza danych*/
     @SuppressLint("NewApi")
     protected Connection newConnection() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -70,6 +67,7 @@ public class DatabaseConnectionController {
         try {
 
             Class.forName(driverClass);
+            /*stworzenie adresu polaczenia zawierajacego dane potrzebne do uwierzytelnienia w bazie */
             connectionURL = "jdbc:jtds:sqlserver://" + ip + ";databaseName=" + db + ";user=" + un + ";password=" + password;
             newConnection = DriverManager.getConnection(connectionURL);
         } catch (SQLException se) {
@@ -82,41 +80,44 @@ public class DatabaseConnectionController {
         return newConnection;
     }
 
-    public boolean signIn(Context context, String email, String password){
+    /*funkcja odpowiedzialna za zalogowanie uzytownika*/
+    public boolean signIn(Context context, String email, String password) {
         String serverStatement = "";
         boolean isSucceed = false;
         try {
+            /*sprawdzenie, czy istnieje polaczenie z baza danych*/
             if (databaseConnection == null) {
                 serverStatement = "Błąd połączenia z serwerem, spróbuj ponownie";
             } else {
+                /*definicja zapytania*/
                 String query = "select * from Pacjenci where email='" + email + "' and haslo='" + password + "'";
+                /*stworzenie zapytania SQL do bazy*/
                 Statement stmt = databaseConnection.createStatement();
+                /*uruchomienie zapytania*/
                 ResultSet rs = stmt.executeQuery(query);
 
-                if(rs.next())
-                {
+                /*sprawdzenie, czy zapytanie zwraca wyniki*/
+                if (rs.next()) {
+                    /*zalogowanie uzytkownika*/
                     UserSession.getSession().signIn(rs.getInt("ID_pacjenta"));
                     UserSession.getSession().setLoggedIn(true);
                     serverStatement = "Zalogowano pomyślnie";
                     isSucceed = true;
-                }
-                else
-                {
+                } else {
                     serverStatement = "Nieprawidłowe dane logowania";
                     UserSession.getSession().setLoggedIn(false);
                 }
             }
             Toast.makeText(context, serverStatement, Toast.LENGTH_LONG).show();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return isSucceed;
     }
 
 
-    public boolean registerUser(Context context, PatientModel newPatient){
+    /*funkcja odpowiedzialna za zarejestrowanie uzytkownika*/
+    public boolean registerUser(Context context, PatientModel newPatient) {
         boolean isSucceed = false;
         try {
             if (databaseConnection == null) {
@@ -130,14 +131,13 @@ public class DatabaseConnectionController {
                 ResultSet rs = stmt.executeQuery(query);
                 return isSucceed;
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return isSucceed;
     }
 
+    /*funkcja zwracajaca liste wszystkich specjalizacji */
     public ArrayList<SpecializationModel> getAllSpecializationsList() {
         ArrayList<SpecializationModel> specializationsList = new ArrayList<SpecializationModel>();
         try {
@@ -148,8 +148,7 @@ public class DatabaseConnectionController {
                 String query = "select * from Specjalizacje";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     SpecializationModel tmpSpecializationModel = new SpecializationModel();
                     tmpSpecializationModel.setSpecializationID(rs.getInt("ID_specjalizacji"));
                     tmpSpecializationModel.setSpecializationName(rs.getString("Nazwa"));
@@ -158,14 +157,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return specializationsList;
     }
 
+    /*funkcja zwracajaca liste wszystkich lekarzy w danej specjalizacji */
     public ArrayList<DoctorModel> getDoctorsFromSpecialization(int specializationID) {
         ArrayList<DoctorModel> doctorsFromSpecializationsList = new ArrayList<>();
         try {
@@ -175,20 +173,18 @@ public class DatabaseConnectionController {
                 String query = doctorInfoQuery + " l.ID_specjalizacji=" + specializationID + ";";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     doctorsFromSpecializationsList.add(fillDoctorModel(rs));
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return doctorsFromSpecializationsList;
     }
 
+    /*funkcja odpowiedzialna za wyszukiwanie lekarzy*/
     public ArrayList<DoctorModel> searchForDoctors(String searchinput) {
         ArrayList<DoctorModel> foundedDoctors = new ArrayList<>();
         try {
@@ -199,20 +195,18 @@ public class DatabaseConnectionController {
                         "%') or (Ulica like N'" + searchinput + "%') or (Miasto like N'" + searchinput + "%'));";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     foundedDoctors.add(getDoctorInfo(rs.getInt("ID_lekarza")));
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return foundedDoctors;
     }
 
+    /*funkcja odpowiedzialna za wyszukanie wszystkich lekarzy w wybranym przez pacjenta terminie*/
     public ArrayList<DoctorModel> getDoctorsAvailableInDate(String date) {
         ArrayList<DoctorModel> foundedDoctors = new ArrayList<>();
         try {
@@ -222,20 +216,18 @@ public class DatabaseConnectionController {
                 String query = "select distinct ID_lekarza from Terminy where Data='" + date + "' and Czy_dostepny=1;";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     foundedDoctors.add(getDoctorInfo(rs.getInt("ID_lekarza")));
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return foundedDoctors;
     }
 
+    /*funkcja odpowiedzialna za pobieranie informacji o lekarzu*/
     public DoctorModel getDoctorInfo(int doctorID) {
         DoctorModel doctor = new DoctorModel();
         try {
@@ -245,20 +237,18 @@ public class DatabaseConnectionController {
                 String query = doctorInfoQuery + " ID_lekarza='" + doctorID + "'";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     doctor = fillDoctorModel(rs);
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return doctor;
     }
 
+    /*funkcja odpowiedzialna za wypelnienie obiektu lekarza pobranymi danymi*/
     public DoctorModel fillDoctorModel(ResultSet rs) {
         DoctorModel doctor = new DoctorModel();
         try {
@@ -284,6 +274,7 @@ public class DatabaseConnectionController {
         return doctor;
     }
 
+    /*funkcja odpowiedzialna za pobranie listy zabiegow */
     public ArrayList<TreatmentModel> getDoctorTreatmentsList(int doctorID) {
         ArrayList<TreatmentModel> treatmentsList = new ArrayList<>();
         try {
@@ -293,8 +284,7 @@ public class DatabaseConnectionController {
                 String query = "select * from Zabiegi where ID_lekarza=" + doctorID;
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     TreatmentModel tmpTreatment = new TreatmentModel();
                     tmpTreatment.setTreatmentID(rs.getInt("ID_zabiegu"));
                     tmpTreatment.setDoctorID(rs.getInt("ID_lekarza"));
@@ -306,14 +296,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return treatmentsList;
     }
 
+    /*funkcja odpowiedzialna za pobranie opinii o lekarzu*/
     public ArrayList<OpinionModel> getDoctorOpinionsList(int doctorID) {
         ArrayList<OpinionModel> opinionsList = new ArrayList<>();
         try {
@@ -323,8 +312,7 @@ public class DatabaseConnectionController {
                 String query = "select * from Opinie where ID_lekarza=" + doctorID + " order by Data_dodania desc;";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     OpinionModel tmpOpinionModel = new OpinionModel();
                     tmpOpinionModel.setOpinionID(rs.getInt("ID_opinii"));
                     tmpOpinionModel.setDoctorID(rs.getInt("ID_lekarza"));
@@ -338,14 +326,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return opinionsList;
     }
 
+    /*funkcja odpowiedzialna za zmiane hasla pacjenta*/
     public void changePassword(String newPassword) {
         try {
             if (databaseConnection == null) {
@@ -356,13 +343,12 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
     }
 
+    /*funkcja odpowiedzialna za pobranie informacji o pacjencie*/
     public PatientModel getPatientInfo(int patientID) {
         PatientModel patientModel = new PatientModel();
         try {
@@ -372,8 +358,7 @@ public class DatabaseConnectionController {
                 String query = "select * from Pacjenci where ID_pacjenta=" + patientID;
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     patientModel.setPatientID(rs.getInt("ID_pacjenta"));
                     patientModel.setPatientName(rs.getString("Imie"));
                     patientModel.setPatientSurname(rs.getString("Nazwisko"));
@@ -383,14 +368,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return patientModel;
     }
 
+    /*funkcja odpowiedzialna za pobranie adresow i opisow zdjec z galerii lekarza*/
     public HashMap<String, String> getDoctorGalleryUrlsList(int doctorID) {
         HashMap<String, String> doctorUrlsList = new HashMap<>();
         try {
@@ -400,20 +384,18 @@ public class DatabaseConnectionController {
                 String query = "select * from Zdjecia where ID_lekarza=" + doctorID;
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     doctorUrlsList.put(rs.getString("Url"), rs.getString("Opis"));
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return doctorUrlsList;
     }
 
+    /*funkcja odpowiedzialna za pobranie informacji o danym zabiegu*/
     public TreatmentModel getTreatmentInfo(int treatmentID) {
         TreatmentModel treatmentModel = new TreatmentModel();
         try {
@@ -423,8 +405,7 @@ public class DatabaseConnectionController {
                 String query = "select * from Zabiegi where ID_zabiegu=" + treatmentID + ";";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     treatmentModel.setTreatmentID(rs.getInt("ID_zabiegu"));
                     treatmentModel.setDoctorID(rs.getInt("ID_lekarza"));
                     treatmentModel.setTreatmentName(rs.getString("Nazwa"));
@@ -432,14 +413,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return treatmentModel;
     }
 
+    /*funkcja odpowiedzialna za pobranie informacji o danym terminie*/
     public TreatmentDateModel getTreatmentDateInfo(int treatmentDateID) {
         TreatmentDateModel treatmentDateModel = new TreatmentDateModel();
         try {
@@ -449,8 +429,7 @@ public class DatabaseConnectionController {
                 String query = "select * from Terminy where ID_terminu=" + treatmentDateID + ";";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     treatmentDateModel.setTreatmentDateID(rs.getInt("ID_terminu"));
                     treatmentDateModel.setTreatmentID(rs.getInt("ID_zabiegu"));
                     treatmentDateModel.setDoctorID(rs.getInt("ID_lekarza"));
@@ -460,14 +439,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return treatmentDateModel;
     }
 
+    /*funkcja odpowiedzialna za pobranie wszystkich zabiegow dostepnych w danym dniu*/
     public ArrayList<TreatmentDateModel> getTodayTreatment(int treatmentID, String todayDate) {
         ArrayList<TreatmentDateModel> todayTreatment = new ArrayList<>();
         try {
@@ -478,8 +456,7 @@ public class DatabaseConnectionController {
                         "' and Czy_dostepny=1" + ";";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     TreatmentDateModel treatmentDateModel = new TreatmentDateModel();
                     treatmentDateModel.setTreatmentDateID(rs.getInt("ID_terminu"));
                     treatmentDateModel.setTreatmentID(rs.getInt("ID_zabiegu"));
@@ -492,14 +469,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return todayTreatment;
     }
 
+    /*funkcja odpowiedzialna za zarezerwowanie terminu wizyty*/
     public boolean bookTreatment(int treatmentDateID, int patientID) {
         boolean isSucceed = false;
         try {
@@ -511,22 +487,20 @@ public class DatabaseConnectionController {
                         ", " + patientID + ", 0, 1, 0, 0);";
                 updateTreatmentAvailability(treatmentDateID);
                 Statement stmt = databaseConnection.createStatement();
-               // stmt.executeQuery(query);
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next()) {
+                while (rs.next()) {
 
                 }
 
                 isSucceed = true;
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return isSucceed;
     }
 
+    /*funkcja odpowiedzialna za ustawienie terminu w bazie jako zarezerwowany*/
     public void updateTreatmentAvailability(int treatmentDateID) {
         try {
             if (databaseConnection == null) {
@@ -536,15 +510,13 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 stmt.executeQuery(query);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
     }
 
 
-
+    /*funkcja odpowiedzialna za pobranie listy wszystkich rezerwacji pacjenta*/
     public ArrayList<VisitModel> getPatientVisitsList(int patientID) {
         ArrayList<VisitModel> patientVisitsList = new ArrayList<>();
         try {
@@ -557,8 +529,7 @@ public class DatabaseConnectionController {
                         "where ID_pacjenta=" + patientID + " order by Data desc";
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next())
-                {
+                while (rs.next()) {
                     VisitModel tmpVisit = new VisitModel();
                     tmpVisit.setVisitID(rs.getInt("ID_rezerwacji"));
                     tmpVisit.setTreatmentDateID(rs.getInt("ID_terminu"));
@@ -575,32 +546,13 @@ public class DatabaseConnectionController {
                 }
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return patientVisitsList;
     }
 
-/*    public VisitModel fillVisitModel(int visitID) {
-        VisitModel tmpVisitModel = new VisitModel();
-        try {
-            if (databaseConnection == null) {
-
-            } else {
-                String query = "update Terminy set Czy_dostepny=0 where ID_terminu=" + treatmentDateID + ";";
-                Statement stmt = databaseConnection.createStatement();
-                stmt.executeQuery(query);
-            }
-        }
-        catch (Exception ex)
-        {
-
-        }
-        return tmp
-    }*/
-
+    /*funkcja odpowiedzialna za odwolanie rezerwacji*/
     public void removeReservation(int visitID, int treatmentDateID) {
         try {
             if (databaseConnection == null) {
@@ -611,14 +563,13 @@ public class DatabaseConnectionController {
                 ResultSet rs = stmt.executeQuery(query);
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         setTreatmentDateAvailable(treatmentDateID);
     }
 
+    /*funkcja odpowiedzialna za ustawienie terminu jako dostepnego; wywolywana po odwolaniu rezerwacji*/
     public void setTreatmentDateAvailable(int treatmentDateID) {
         try {
             if (databaseConnection == null) {
@@ -628,13 +579,12 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
     }
 
+    /*funkcja odpowiedzialna za pobranie informacji o danej rezerwacji*/
     public VisitModel getVisitInfo(int treatmentDateID) {
         VisitModel tmpVisit = new VisitModel();
         try {
@@ -645,7 +595,7 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
 
-                while(rs.next()) {
+                while (rs.next()) {
                     tmpVisit.setVisitID(rs.getInt("ID_rezerwacji"));
                     tmpVisit.setTreatmentDateID(rs.getInt("ID_terminu"));
                     tmpVisit.setPatientID(rs.getInt("ID_pacjenta"));
@@ -656,14 +606,13 @@ public class DatabaseConnectionController {
                     tmpVisit.setVisitNote(rs.getString("Notatka"));
                 }
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return tmpVisit;
     }
 
+    /*funkcja odpowiedzialna za dodanie opinii o lekarzu*/
     public void addOpinion(OpinionModel opinion, int visitID) {
         try {
             if (databaseConnection == null) {
@@ -674,19 +623,14 @@ public class DatabaseConnectionController {
                         opinion.getRating() + ", N'" + opinion.getOpinionContent() + "', '" + opinion.getOpinionAddDate() + "');";
                 Statement stmt = databaseConnection.createStatement();
                 stmt.executeQuery(query);
-                /*ResultSet rs = stmt.executeQuery(query);
-                while(rs.next()) {
-
-                }*/
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         setVisitReviewed(visitID);
     }
 
+    /*funkcja odpowiedzialna za ustawienie na bazie wizyty jako juz ocenionej*/
     public void setVisitReviewed(int visitID) {
         try {
             if (databaseConnection == null) {
@@ -695,18 +639,13 @@ public class DatabaseConnectionController {
                 String query = "update Rezerwacje set Czy_oceniona=1 where ID_rezerwacji=" + visitID + ";";
                 Statement stmt = databaseConnection.createStatement();
                 stmt.executeQuery(query);
-                /*ResultSet rs = stmt.executeQuery(query);
-                while(rs.next()) {
-
-                }*/
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
     }
 
+    /*funkcja odpowiedzialna za pobranie informacji o specjalizacji na podstawie jej ID*/
     public SpecializationModel getSpecializationInfo(int specializationID) {
         SpecializationModel specializationModel = new SpecializationModel();
         try {
@@ -717,19 +656,18 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 stmt.executeQuery(query);
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next()) {
+                while (rs.next()) {
                     specializationModel.setSpecializationID(rs.getInt("ID_specjalizacji"));
                     specializationModel.setSpecializationName(rs.getString("Nazwa"));
                 }
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return specializationModel;
     }
 
+    /*funkcja odpowiedzialna za pobranie informacji o specjalizacji na podstawie jej nazwy*/
     public SpecializationModel getSpecializationInfoFromName(String specializationName) {
         SpecializationModel specializationModel = new SpecializationModel();
         try {
@@ -740,19 +678,18 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 stmt.executeQuery(query);
                 ResultSet rs = stmt.executeQuery(query);
-                while(rs.next()) {
+                while (rs.next()) {
                     specializationModel.setSpecializationID(rs.getInt("ID_specjalizacji"));
                     specializationModel.setSpecializationName(rs.getString("Nazwa"));
                 }
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return specializationModel;
     }
 
+    /*funkcja odpowiedzialna za sprawdzenie, czy pacjent jest zablokowany u danego lekarza*/
     public boolean isPatientBlocked(int doctorID, int patientiD) {
         boolean isBlocked = false;
         try {
@@ -763,20 +700,19 @@ public class DatabaseConnectionController {
                 Statement stmt = databaseConnection.createStatement();
                 stmt.executeQuery(query);
                 ResultSet rs = stmt.executeQuery(query);
-                if(rs.next()) {
+                if (rs.next()) {
                     isBlocked = true;
                 }
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
         return isBlocked;
     }
 
 
-    public void updatePatientInfo(PatientModel patient){
+    /*funkcja odpowiedzialna za zaktualizowanie danych pacjenta*/
+    public void updatePatientInfo(PatientModel patient) {
         try {
             if (databaseConnection == null) {
 
@@ -788,13 +724,10 @@ public class DatabaseConnectionController {
                 stmt.executeQuery(query);
                 ResultSet rs = stmt.executeQuery(query);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
     }
-
 
 
 }

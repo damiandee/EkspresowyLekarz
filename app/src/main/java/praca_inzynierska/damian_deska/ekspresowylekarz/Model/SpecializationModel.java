@@ -4,6 +4,7 @@ package praca_inzynierska.damian_deska.ekspresowylekarz.Model;
  * Created by Damian Deska on 2017-01-15.
  */
 
+/*klasa reprezentujaca specjalizacje*/
 public class SpecializationModel {
 
     private int specializationID;

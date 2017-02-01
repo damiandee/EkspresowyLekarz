@@ -4,6 +4,7 @@ package praca_inzynierska.damian_deska.ekspresowylekarz.Model;
  * Created by Damian Deska on 2017-01-11.
  */
 
+/*klasa reprezentujaca dany zabieg*/
 public class TreatmentModel {
     private int treatmentID;
     private int doctorID;

@@ -70,7 +70,9 @@ public class RegisterActivity extends AppCompatActivity {
                 tmpPatientModel.setPatientPassword(registerPassword.getText().toString());
                 tmpPatientModel.setPatientPhoneNumber(registerPhoneNumber.getText().toString());
 
+                /*sprawdzenie, czy wprowadzono poprawne dane*/
                 if(isRegisterFormDataValid(tmpPatientModel)) {
+                    /*rejestracja uzytkownika*/
                     if(databaseConnectionController.registerUser(getApplicationContext(), tmpPatientModel)) {
                         Toast.makeText(getApplicationContext(), "Rejestracja przebiegła pomyślnie, prosimy się zalogować",
                                 Toast.LENGTH_LONG).show();
@@ -115,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
+        /*dodanie listenerow do wsztstkich pol formularza*/
         registerName.addTextChangedListener(textWatcher);
         registerSurname.addTextChangedListener(textWatcher);
         registerEmail.addTextChangedListener(textWatcher);
@@ -132,11 +135,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /*funkcja sprawdzajaca, czy wszystkie pola formularza wypelniona poprawnie (min. dlugosc 3 znaki)*/
     private boolean isFormFilled(){
         return registerName.getText().length() > 2 && registerSurname.getText().length() > 2 && registerEmail.getText().length() > 2
                 && registerPassword.getText().length() > 2 && registerPhoneNumber.getText().length() > 2;
     }
 
+    /*walidacja wszystkich wprowadzonych danych*/
     public boolean isRegisterFormDataValid(PatientModel patientModel) {
         boolean isFormCorrect = true;
 

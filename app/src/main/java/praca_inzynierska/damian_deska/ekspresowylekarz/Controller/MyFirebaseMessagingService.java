@@ -1,9 +1,5 @@
 package praca_inzynierska.damian_deska.ekspresowylekarz.Controller;
 
-/**
- * Created by Damian Deska on 2017-01-20.
- */
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,16 +17,15 @@ import com.google.firebase.messaging.RemoteMessage;
 import praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.MainActivity;
 import praca_inzynierska.damian_deska.ekspresowylekarz.R;
 
+/**
+ * Created by Damian Deska on 2017-01-20.
+ */
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
 
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
-    // [START receive_message]
+    /*funkcja odpowiedzialna za dzialania wykonywane w przypadku otrzymania wiadomosci z serwisu Firebase*/
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // [START_EXCLUDE]
@@ -47,48 +42,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
+        /*sprawdzenie, czy wiadomosc zawiera dodatkowe informacje*/
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
-        // Check if message contains a notification payload.
+        /*sprawdzenie, czy wiadomosc zawiera powiadomienie*/
         if (remoteMessage.getNotification() != null) {
+            /*dodanie informacji o powiadomieniu do intencji i uruchomienie glownej aktywnosci; uruchmiania jest ona w przypadku
+            * klikniecia przez pacjenta na powiadomienie*/
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("title", remoteMessage.getNotification().getTitle());
             i.putExtra("body", remoteMessage.getNotification().getBody());
             startActivity(i);
         }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
 
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.stub)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
 }

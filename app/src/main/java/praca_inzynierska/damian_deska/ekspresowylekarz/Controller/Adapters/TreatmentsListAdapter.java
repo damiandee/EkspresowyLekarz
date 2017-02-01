@@ -67,15 +67,20 @@ public class TreatmentsListAdapter extends BaseAdapter {
             TextView treatmentCost = (TextView)vi.findViewById(R.id.treatmentCost);
             treatmentCost.setText(String.valueOf(data.get(position).getTreatmentCost()) + "zł");
             Button treatmentCalendarButton = (Button) vi.findViewById(R.id.treatmentCalendarButton);
+            /*listener przycisku rezerwacji terminu*/
             treatmentCalendarButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    /*sprawdzenie, czy uzytkownik jest zalogowany*/
                     if(UserSession.getSession().isLoggedIn()) {
+                        /*sprawdzenie, czy uzytkownik nie jest zalogowany u danego lekarza*/
                         if(!databaseConnectionController.isPatientBlocked(data.get(position).getDoctorID(), UserSession.getSession().getUserID())) {
+                            /*wyswietlenie kalendarza rezerwacji*/
                             DatePickerFragment datePickerFragment = new DatePickerFragment();
                             datePickerFragment.setIDS(doctorID, data.get(position).getTreatmentID());
                             datePickerFragment.show(fragmentManager, "DatePicker");
                         } else {
+                            /*wyswietlenie komunikatu o zablokowaniu*/
                             new AlertDialog.Builder(context)
                                     .setTitle("Zostałeś zablokowany")
                                     .setMessage("Ten lekarz zablokował Cię i nie możesz się do niego umówić")
@@ -88,6 +93,7 @@ public class TreatmentsListAdapter extends BaseAdapter {
                                     .show();
                         }
                     } else {
+                        /*wyswietlenie komunikatu o koniecznosci zalogowania sie*/
                         Toast.makeText(context, "Zalgouj sie, aby zobaczyć wolne terminy", Toast.LENGTH_LONG).show();
                     }
                 }
