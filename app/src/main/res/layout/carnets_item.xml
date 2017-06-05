@@ -25,7 +25,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <TextView
-                android:id="@+id/visitDate"
+                android:id="@+id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dip"
@@ -35,13 +35,24 @@
                 android:layout_marginTop="5dp" />
 
             <TextView
-                android:id="@+id/visitTime"
+                android:id="@+id/endDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dip"
                 android:orientation="horizontal"
                 android:layout_marginLeft="10dip"
-                android:layout_toRightOf="@+id/visitDate"
+                android:layout_toRightOf="@+id/startDate"
+                android:layout_marginTop="5dp"
+                android:layout_alignBottom="@+id/visitName" />
+
+            <TextView
+                android:id="@+id/reservationPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dip"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@+id/endDate"
                 android:layout_marginTop="5dp"
                 android:layout_alignBottom="@+id/visitName" />
         </LinearLayout>
@@ -54,7 +65,7 @@
             android:layout_marginBottom="5dp">
 
             <TextView
-                android:id="@+id/visitDoctor"
+                android:id="@+id/visitPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="11dip"
@@ -62,41 +73,13 @@
                 android:layout_marginLeft="10dip"
                 />
 
-            <TextView
-                android:id="@+id/visitDoctorAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="11dip"
-                android:orientation="horizontal"
-                android:layout_marginLeft="10dip"
-                />
-
-            <TextView
-                android:id="@+id/visitCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="11dip"
-                android:orientation="horizontal"
-                android:layout_marginLeft="10dip"
-                />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/visitNote"
-            android:layout_below="@+id/visitInfoLinearLayout"
-            android:background="@drawable/rounded_border"
-            android:padding="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/visitButton"
-            android:layout_below="@+id/visitNote"
+            android:id="@+id/cancelVisitButton"
+            android:layout_below="@+id/visitInfoLinearLayout"
             android:background="@drawable/rounded_button_inactive"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"

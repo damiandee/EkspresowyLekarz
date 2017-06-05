@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="praca_inzynierska.damian_deska.ekspresowylekarz">
+    package="praca_inzynierska.damian_deska.pai_gym">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,15 +22,9 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="EkspresowyLekarz"
+        android:label="PAI Gym"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <service android:name=".Controller.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -44,7 +38,7 @@
             android:resource="@color/colorAccent" />
 
         <activity
-            android:name=".Controller.Activities.MainActivity"
+            android:name="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.MainActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,23 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Controller.Activities.LoginActivity"
-            android:label="LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Controller.Activities.DoctorsListActivity"
-            android:label="DoctorsListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Controller.Activities.DoctorPageActivity"
-            android:label="DoctorPageActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Controller.Activities.RegisterActivity" />
-        <activity android:name=".Controller.Activities.ProfileActivity" />
-        <activity android:name=".Controller.Activities.TreatmentReservationActivity" />
-        <activity android:name=".Controller.Activities.ReservationConfirmAcitivity" />
-        <activity android:name=".Controller.Activities.PatientVisitsActivity" />
+        <activity android:name="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.ProfileActivity" />
+        <activity android:name="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.ReservationsActivity" />
+        <activity android:name="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.CarnetsActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -81,13 +61,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".Controller.Activities.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".Controller.Activities.AdvancedSearchInitializationActivity" />
-        <activity android:name=".Controller.Activities.AdvancedSearchActivity" />
-        <activity android:name=".Controller.Activities.CancelReservationActivity" />
-        <activity android:name=".Controller.Activities.AddOpinionActivity"></activity>
+        <activity android:name="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.CancelReservationActivity" />
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF3FA6B5"
-    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.PatientVisitsActivity">
+    tools:context="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.ReservationsActivity">
 
     <include
         android:id="@+id/patientVisitsToolbar"

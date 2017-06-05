@@ -4,7 +4,7 @@
     android:id="@+id/remove_reservation_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.CancelReservationActivity">
+    tools:context="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.CancelReservationActivity">
 
     <include
         android:id="@+id/removeReservationToolbar"
@@ -46,7 +46,7 @@
                 android:layout_marginBottom="5dp"/>
 
             <TextView
-                android:id="@+id/visitDate"
+                android:id="@+id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dip"
@@ -55,13 +55,13 @@
                 android:layout_toRightOf="@+id/visitName" />
 
             <TextView
-                android:id="@+id/visitTime"
+                android:id="@+id/endDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dip"
                 android:orientation="horizontal"
                 android:layout_marginLeft="10dip"
-                android:layout_toRightOf="@+id/visitDate"
+                android:layout_toRightOf="@+id/startDate"
                 android:layout_alignBottom="@+id/visitName" />
         </LinearLayout>
 

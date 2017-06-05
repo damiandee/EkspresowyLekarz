@@ -21,7 +21,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/AppNameText"
-        android:text="EkspresowyLekarz"
+        android:text="PAI Gym"
+        android:layout_below="@+id/mainToolbar"
+        android:typeface="sans"
+        android:textSize="35sp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hello"
         android:layout_below="@+id/mainToolbar"
         android:typeface="sans"
         android:textSize="35sp"
@@ -32,37 +44,36 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchInput"
+        android:layout_height="125px"
+        android:id="@+id/login"
         android:layout_below="@+id/AppNameText"
-        android:drawableLeft="@drawable/search"
+        android:hint="email"
         android:background="@drawable/rounded_border"
+        android:paddingLeft="50px"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="125px"
+        android:hint="password"
+        android:id="@+id/password"
+        android:layout_below="@+id/login"
+        android:background="@drawable/rounded_border"
+        android:paddingLeft="50px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
     <Button
         android:text="Zaloguj"
         android:layout_width="151dp"
         android:id="@+id/loginButton"
         android:gravity="center"
-        android:layout_below="@+id/searchInput"
+        android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_height="50dp"
         android:background="@drawable/rounded_button_active"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/specializationList"
-        android:divider="#808080"
-        android:dividerHeight="1dp"
-        android:background="@drawable/rounded_border"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:padding="5dp"
-        android:layout_below="@+id/loginButton"></ListView>
 
 
 </RelativeLayout>

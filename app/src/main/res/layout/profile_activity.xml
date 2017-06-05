@@ -4,7 +4,7 @@
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="praca_inzynierska.damian_deska.ekspresowylekarz.Controller.Activities.ProfileActivity"
+    tools:context="praca_inzynierska.damian_deska.pai_gym.Controller.Activities.ProfileActivity"
     android:background="#FF3FA6B5">
 
     <include
@@ -28,17 +28,6 @@
             android:hint="Imię"
             android:background="#FFFFFF"
             android:padding="10dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/profilePhoneNumber"
-            android:layout_below="@+id/profileEmail"
-            android:inputType="phone"
-            android:padding="10dp"
-            android:hint="Numer telefonu"
-            android:background="#FFFFFF"
-            android:layout_marginTop="12dp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -69,7 +58,7 @@
             android:text="AKTUALIZUJ"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_below="@+id/profilePhoneNumber"
+            android:layout_below="@+id/profileEmail"
             android:layout_centerHorizontal="true"
             android:background="@drawable/rounded_button_active"
             android:layout_marginTop="15dp"
